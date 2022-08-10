@@ -17,7 +17,6 @@ var (
 		Short: "vim-note",
 		Long:  "vim-note root command",
 		Run: func(cmd *cobra.Command, args []string) {
-			// Do Stuff Here
 			fmt.Println("vim-note")
 		},
 	}
@@ -48,7 +47,6 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/vim-note/config.toml)")
-	//rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 func initConfig() {

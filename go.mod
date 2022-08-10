@@ -5,6 +5,9 @@ go 1.18
 require (
 	cloud.google.com/go/storage v1.22.1
 	firebase.google.com/go v3.13.0+incompatible
+	github.com/gdamore/tcell v1.4.0
+	github.com/mattn/go-runewidth v0.0.13
+	github.com/rivo/uniseg v0.3.4
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.12.0
 	google.golang.org/api v0.86.0
@@ -16,6 +19,7 @@ require (
 	cloud.google.com/go/firestore v1.6.1 // indirect
 	cloud.google.com/go/iam v0.3.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
+	github.com/gdamore/encoding v1.0.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
@@ -25,6 +29,7 @@ require (
 	github.com/googleapis/go-type-adapters v1.0.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/lucasb-eyer/go-colorful v1.0.3 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect

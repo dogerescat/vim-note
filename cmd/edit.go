@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/dogerescat/vim-note/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -20,18 +21,18 @@ var editCmd = &cobra.Command{
 	Long:  "edit file",
 	Run: func(cmd *cobra.Command, args []string) {
 		fileList, _ := storage.GetFileList()
-		fileName := args[0]
+		var fileName string
 		data := []byte("")
 		if len(args) != 0 {
-			if !exist(fileName, fileList) {
+			if !exist(args[0], fileList) {
 				fmt.Println("not exist file")
 				os.Exit(1)
 			}
-			data = storage.Download(args[0])
+			fileName = args[0]
 		} else {
-			fmt.Println("non title")
-			os.Exit(0)
+			fileName = ui.Run(fileList)
 		}
+		data = storage.Download(fileName)
 		err := ioutil.WriteFile(fileName, data, 0664)
 		if err != nil {
 			fmt.Printf(err.Error())
@@ -58,23 +59,13 @@ var editCmd = &cobra.Command{
 			os.Exit(0)
 		}()
 		storage.Upload(content)
-
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(editCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// editCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// editCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
+
 func exist(fileName string, fileList []string) bool {
 	ok := false
 	for i := 0; i < len(fileList); i++ {
