@@ -6,6 +6,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/dogerescat/vim-note/ui/algo"
 	"github.com/dogerescat/vim-note/ui/tui"
 	"github.com/dogerescat/vim-note/ui/util"
 )
@@ -269,6 +270,11 @@ func (t *Terminal) redraw() {
 	t.printAll()
 }
 
+func (t *Terminal) sortList() {
+	str := string(t.input[len(t.prompt):])
+	sampleData = algo.MatchString(str, sampleData)
+}
+
 func Constrain(val int, min int, max int) int {
 	if val < min {
 		return min
@@ -287,6 +293,7 @@ func (t *Terminal) Loop() string {
 	t.printPrompt()
 	t.refresh()
 	t.mutex.Unlock()
+
 	var res string
 	go func() {
 		running := true
@@ -297,7 +304,9 @@ func (t *Terminal) Loop() string {
 				for req := range *events {
 					switch req {
 					case reqList:
-						//t.printList()
+						t.sortList()
+						t.printList()
+						t.printPrompt()
 					case reqPrompt:
 						t.printPrompt()
 					case reqClose:
@@ -313,6 +322,7 @@ func (t *Terminal) Loop() string {
 			t.mutex.Unlock()
 		}
 	}()
+
 	looping := true
 	for looping {
 		queryChanged := false
@@ -330,6 +340,7 @@ func (t *Terminal) Loop() string {
 				}
 			}
 		}
+
 		var doAction func(*action) bool
 		doActions := func(actions []*action) bool {
 			for _, action := range actions {
@@ -339,6 +350,7 @@ func (t *Terminal) Loop() string {
 			}
 			return true
 		}
+
 		doAction = func(action *action) bool {
 			switch action.t {
 			case actIgnore:
@@ -350,16 +362,17 @@ func (t *Terminal) Loop() string {
 				prefix := copySlice(t.input[:t.cx])
 				t.input = append(append(prefix, event.Char), t.input[t.cx:]...)
 				t.cx++
+				req(reqList)
 			case actUp:
 				if t.cy > 2 {
 					t.cy--
 				}
-				req(reqList)
+				//req(reqList)
 			case actDown:
 				if t.cy < t.window.Height()-1 && t.cy <= len(sampleData) {
 					t.cy++
 				}
-				req(reqList)
+				//req(reqList)
 			case actBackwardChar:
 				if t.cx > len(t.prompt) {
 					t.cx--
@@ -370,10 +383,12 @@ func (t *Terminal) Loop() string {
 				}
 			case actDeleteChar:
 				t.delChar()
+				req(reqList)
 			case actBackwardDeleteChar:
 				if t.cx > len(t.prompt) {
 					t.input = append(t.input[:t.cx-1], t.input[t.cx:]...)
 					t.cx--
+					req(reqList)
 				}
 			case actExecute:
 				res = sampleData[t.cy-2]
@@ -383,6 +398,7 @@ func (t *Terminal) Loop() string {
 			}
 			return true
 		}
+
 		actions := t.keymap[event.Comparable()]
 		if len(actions) == 0 && event.Type == tui.Rune {
 			doAction(&action{t: actRune})

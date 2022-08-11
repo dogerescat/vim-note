@@ -14,7 +14,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// editCmd represents the edit command
 var editCmd = &cobra.Command{
 	Use:   "edit",
 	Short: "edit file",
@@ -31,6 +30,9 @@ var editCmd = &cobra.Command{
 			fileName = args[0]
 		} else {
 			fileName = ui.Run(fileList)
+			if fileName == "" {
+				os.Exit(0)
+			}
 		}
 		data = storage.Download(fileName)
 		err := ioutil.WriteFile(fileName, data, 0664)
