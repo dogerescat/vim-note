@@ -1,4 +1,4 @@
-#vim-note
+# vim-note
 vim-note is a memo that can be stored in online storage from the terminal
 
 
@@ -10,7 +10,7 @@ storageBucket = "your-fire-store-bucket.com"
 ```
 
 
-##Features
+## Features
 create new memo
 ```bash
 vim-note new filename
