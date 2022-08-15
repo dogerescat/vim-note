@@ -1,7 +1,3 @@
-/*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
@@ -52,11 +48,11 @@ var editCmd = &cobra.Command{
 		defer func() {
 			err = os.Remove(fileName)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println(err.Error())
 			}
 			err = content.Close()
 			if err != nil {
-				fmt.Println(err)
+				fmt.Println(err.Error())
 			}
 			os.Exit(0)
 		}()

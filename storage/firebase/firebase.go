@@ -34,15 +34,15 @@ func NewStorage(config Config) *Firebase {
 	opt := option.WithCredentialsFile(config.KeyPath)
 	app, err := firebase.NewApp(ctx, firebaseConfig, opt)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err.Error())
 	}
 	client, err := app.Storage(ctx)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err.Error())
 	}
 	bucket, err := client.DefaultBucket()
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err.Error())
 	}
 	return &Firebase{
 		bucket: bucket,
@@ -64,11 +64,11 @@ func (fb Firebase) Upload(file *os.File) {
 		},
 	}
 	if _, err := io.Copy(writer, file); err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err.Error())
 	}
 
 	if err := writer.Close(); err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err.Error())
 	}
 }
 
@@ -109,13 +109,13 @@ func (fb Firebase) Download(fileName string) []byte {
 	ctx := context.Background()
 	rc, err := fb.bucket.Object(fileName).NewReader(ctx)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err.Error())
 	}
 	defer rc.Close()
 
 	data, err := ioutil.ReadAll(rc)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln(err.Error())
 	}
 	return data
 }

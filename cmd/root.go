@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/user"
 
@@ -17,7 +16,10 @@ var (
 		Short: "vim-note",
 		Long:  "vim-note root command",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("vim-note")
+			fmt.Println("Commands:")
+			fmt.Println(" new                   create new memo")
+			fmt.Println(" list                  show memo list")
+			fmt.Println(" edit [filename]       edit memo")
 		},
 	}
 )
@@ -39,7 +41,7 @@ var storage Storage
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 }
@@ -55,18 +57,19 @@ func initConfig() {
 	} else {
 		cur, err := user.Current()
 		if err != nil {
-			log.Fatalln(err)
+			fmt.Println(err.Error())
+			os.Exit(1)
 		}
 		viper.AddConfigPath(cur.HomeDir + "/vim-note")
 		viper.SetConfigName("config")
 		viper.SetConfigType("toml")
 	}
 	if err := viper.ReadInConfig(); err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 	if err := viper.Unmarshal(&config); err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 	storage = firebase.NewStorage(config.Firebase)
