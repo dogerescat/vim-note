@@ -9,6 +9,10 @@ keyPath = "your_firestore_key.json"
 storageBucket = "your-fire-store-bucket.com"
 ```
 
+## Installation
+```bash
+go install github.com/dogerescat/vim-note@latest
+```
 
 ## Features
 create new memo
