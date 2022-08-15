@@ -12,7 +12,6 @@ var (
 
 const (
 	Rune EventType = iota
-
 	CtrlA
 	CtrlB
 	CtrlC
@@ -41,26 +40,21 @@ const (
 	CtrlZ
 	ESC
 	CtrlSpace
-
 	CtrlBackSlash
 	CtrlRightBracket
 	CtrlCaret
 	CtrlSlash
-
 	Invalid
 	Resize
 	Mouse
 	DoubleClick
 	LeftClick
 	RightClick
-
 	BTab
 	BSpace
-
 	Del
 	PgUp
 	PgDn
-
 	Up
 	Down
 	Left
@@ -68,12 +62,10 @@ const (
 	Home
 	End
 	Insert
-
 	SUp
 	SDown
 	SLeft
 	SRight
-
 	F1
 	F2
 	F3
@@ -86,22 +78,17 @@ const (
 	F10
 	F11
 	F12
-
 	Change
 	BackwardEOF
-
 	AltBS
-
 	AltUp
 	AltDown
 	AltLeft
 	AltRight
-
 	AltSUp
 	AltSDown
 	AltSLeft
 	AltSRight
-
 	Alt
 	CtrlAlt
 )
@@ -168,7 +155,6 @@ type Renderer interface {
 	Init()
 	Clear()
 	RefreshWindows(windows []Window)
-	//Refresh()
 	Close()
 	GetChar() Event
 	MaxX() int
