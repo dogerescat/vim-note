@@ -28,7 +28,7 @@ vim-note list
 ```
 
 
-edit memo
+edit memo(Search if filename does not exist)
 ```bash
 vim-note edit [filename]
 ```
