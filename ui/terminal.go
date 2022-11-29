@@ -149,8 +149,8 @@ func NewTerminal() *Terminal {
 		prompt:   opt.prompt,
 		pointer:  ">",
 		initFunc: func() { renderer.Init() },
-		margin:   defaultMargin(),
-		padding:  defaultMargin(),
+		margin:   opt.margin,
+		padding:  opt.padding,
 		printer:  func(str string) { fmt.Println(str) },
 		keymap:   defaultKeymap(),
 		input:    input,
@@ -190,7 +190,7 @@ func (t *Terminal) resizeWindows() {
 
 	extraMargin := [4]int{}
 	for idx, sizeSpec := range t.margin {
-		extraMargin[idx] += 1 + idx%2
+		//extraMargin[idx] += 1 + idx%2
 		marginInt[idx] = sizeSpecToInt(idx, sizeSpec)
 	}
 
