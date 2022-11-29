@@ -7,13 +7,22 @@ type sizeSpec struct {
 	percent bool
 }
 
-//[4]sizeSpec trbl
+// [4]sizeSpec trbl
 func defaultMargin() [4]sizeSpec {
 	var s [4]sizeSpec
 	s[0].percent = true
 	s[1].percent = true
 	s[2].percent = true
 	s[3].percent = true
+	return s
+}
+
+func defaultPadding() [4]sizeSpec {
+	var s [4]sizeSpec
+	// s[0].percent = true
+	// s[1].percent = true
+	// s[2].percent = true
+	// s[3].percent = true
 	return s
 }
 
@@ -34,6 +43,6 @@ func DefaultOption() *Option {
 		query:   "",
 		tabstop: 8,
 		margin:  defaultMargin(),
-		padding: defaultMargin(),
+		padding: defaultPadding(),
 	}
 }
