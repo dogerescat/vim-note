@@ -79,7 +79,7 @@ const (
 	actRebind
 )
 
-var sampleData []string
+var fileNames []string
 
 func toAction(types ...actionType) []*action {
 	actions := make([]*action, len(types))
@@ -190,7 +190,6 @@ func (t *Terminal) resizeWindows() {
 
 	extraMargin := [4]int{}
 	for idx, sizeSpec := range t.margin {
-		//extraMargin[idx] += 1 + idx%2
 		marginInt[idx] = sizeSpecToInt(idx, sizeSpec)
 	}
 
@@ -240,10 +239,10 @@ func (t *Terminal) delChar() bool {
 }
 
 func (t *Terminal) printItem() {
-	m := math.Min(float64(t.window.Height()-2), float64(len(sampleData)))
+	m := math.Min(float64(t.window.Height()-2), float64(len(fileNames)))
 	for i := 0; i < int(m); i++ {
 		t.move(i+2, 2, true)
-		t.window.Print(sampleData[i])
+		t.window.Print(fileNames[i])
 	}
 }
 
@@ -272,7 +271,7 @@ func (t *Terminal) redraw() {
 
 func (t *Terminal) sortList() {
 	str := string(t.input[len(t.prompt):])
-	sampleData = algo.MatchString(str, sampleData)
+	fileNames = algo.MatchString(str, fileNames)
 }
 
 func Constrain(val int, min int, max int) int {
@@ -367,12 +366,10 @@ func (t *Terminal) Loop() string {
 				if t.cy > 2 {
 					t.cy--
 				}
-				//req(reqList)
 			case actDown:
-				if t.cy < t.window.Height()-1 && t.cy <= len(sampleData) {
+				if t.cy < t.window.Height()-1 && t.cy <= len(fileNames) {
 					t.cy++
 				}
-				//req(reqList)
 			case actBackwardChar:
 				if t.cx > len(t.prompt) {
 					t.cx--
@@ -391,7 +388,7 @@ func (t *Terminal) Loop() string {
 					req(reqList)
 				}
 			case actExecute:
-				res = sampleData[t.cy-2]
+				res = fileNames[t.cy-2]
 				req(reqQuit)
 			case actClose:
 				req(reqQuit)
