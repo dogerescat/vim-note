@@ -2,71 +2,47 @@ package algo
 
 import (
 	"sort"
+
+	"github.com/junegunn/fzf/src/algo"
+	"github.com/junegunn/fzf/src/util"
 )
 
-type pair struct {
-	a int
-	b string
-}
-
-func max(x, y int) int {
-	if x > y {
-		return x
-	}
-	return y
+type stringResult struct {
+	name   string
+	result algo.Result
 }
 
 func MatchString(str string, list []string) []string {
-	siz := len(list)
-	var data []pair
-	for k := 0; k < siz; k++ {
-		s := list[k]
-		n := len(str)
-		m := len(s)
-		var dp [100][100]int
-		dp[0][0] = 0
-		for i := 1; i <= n; i++ {
-			for j := 1; j <= m; j++ {
-				dp[i][j] = 0
-				if str[i-1] == s[j-1] {
-					dp[i][j] = max(dp[i][j], dp[i-1][j-1]+1)
-				}
-				dp[i][j] = max(dp[i][j], dp[i-1][j])
-				dp[i][j] = max(dp[i][j], dp[i][j-1])
-			}
-		}
-		max_con := 0
-		cnt := 100
-		prev_con := false
-		c := 0
-		x := n
-		y := m
-		for x > 0 && y > 0 {
-			if dp[x][y] == dp[x-1][y] {
-				prev_con = false
-				cnt = 0
-				x--
-			} else if dp[x][y] == dp[x][y-1] {
-				prev_con = false
-				cnt = 0
-				y--
-			} else {
-				if prev_con {
-					cnt++
-					max_con = max(max_con, cnt)
-				}
-				prev_con = true
-				x--
-				y--
-				c = y
-			}
-		}
-		data = append(data, pair{(dp[n][m] + (100 - c) + 100*max_con), s})
+	pattern := []rune(str)
+	var data []stringResult
+	for _, s := range list {
+		input := util.RunesToChars([]rune(s))
+		slab := util.MakeSlab(100*1024, 2048)
+		result, _ := algo.FuzzyMatchV2(false, true, true, &input, pattern, false, slab)
+		data = append(data, stringResult{name: s, result: result})
 	}
-	sort.SliceStable(data, func(i, j int) bool { return data[i].a > data[j].a })
+	sort.SliceStable(data, func(i, j int) bool {
+		if data[i].result.Score > data[j].result.Score {
+			return true
+		} else if data[i].result.Score == data[j].result.Score {
+			if data[i].result.Start > data[j].result.Start {
+				return true
+			} else if data[i].result.Start == data[j].result.Start {
+				if data[i].result.End > data[j].result.End {
+					return true
+				} else {
+					return false
+				}
+			} else {
+				return false
+			}
+		} else {
+			return false
+		}
+	})
 	var res []string
-	for i := 0; i < siz; i++ {
-		res = append(res, data[i].b)
+	for _, sr := range data {
+		res = append(res, sr.name)
 	}
 	return res
 }

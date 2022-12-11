@@ -1,7 +1,7 @@
 package ui
 
 func Run(list []string) string {
-	sampleData = list
+	fileNames = list
 	t := NewTerminal()
 	return t.Loop()
 }
