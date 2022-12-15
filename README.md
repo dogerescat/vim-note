@@ -33,4 +33,6 @@ edit memo(Search if filename does not exist)
 vim-note edit [filename]
 ```
 ## Demo
-![demo](https://media.giphy.com/media/XDLs3UT6gl9Va0fwfL/giphy.gif)
+https://user-images.githubusercontent.com/61899549/207861926-3f8b439b-aff9-4568-bab4-30d370049b70.mov
+
+
