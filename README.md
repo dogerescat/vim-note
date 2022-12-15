@@ -32,3 +32,5 @@ edit memo(Search if filename does not exist)
 ```bash
 vim-note edit [filename]
 ```
+## Demo
+![demo](https://media.giphy.com/media/XDLs3UT6gl9Va0fwfL/giphy.gif)
