@@ -129,10 +129,10 @@ func MakeFrameStyle() FrameStyle {
 	return FrameStyle{
 		horizontal:  '-',
 		vertical:    '│',
-		topLeft:     '+',
-		topRight:    '+',
-		bottomLeft:  '+',
-		bottomRight: '+',
+		topLeft:     '┌',
+		topRight:    '┐',
+		bottomLeft:  '└',
+		bottomRight: '┘',
 	}
 }
 
