@@ -33,6 +33,7 @@ edit memo(Search if filename does not exist)
 vim-note edit [filename]
 ```
 ## Demo
-https://user-images.githubusercontent.com/61899549/207861926-3f8b439b-aff9-4568-bab4-30d370049b70.mov
+https://user-images.githubusercontent.com/61899549/223908530-39e70d42-85d8-4e2c-99a7-f0d15e4adf01.mov
+
 
 
